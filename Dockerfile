@@ -10,8 +10,7 @@ COPY . .
 # Build the Go application with static linking
 RUN CGO_ENABLED=0 go build -a -ldflags '-extldflags "-static"' -o vault-signer .
 
-# Use distroless static - no GLIBC dependency needed
-FROM gcr.io/distroless/static
+FROM go:1.22.1-bullseye
 # Set the working directory in the final container
 WORKDIR /app
 # Copy the binary from the builder stage
