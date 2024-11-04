@@ -1,4 +1,4 @@
-FROM golang:1.22.1 AS builder
+FROM golang:1.22.8-bullseye AS builder
 # Set the working directory inside the container
 WORKDIR /app
 # Copy go.mod and go.sum files and download dependencies
@@ -10,7 +10,7 @@ COPY . .
 RUN go build -o vault-signer .
 
 # Use Debian 12 (Bookworm) based distroless which has GLIBC 2.34
-FROM gcr.io/distroless/base-debian12
+FROM golang:1.22.8-bullseye
 # Set the working directory in the final container
 WORKDIR /app
 # Copy the binary from the builder stage
