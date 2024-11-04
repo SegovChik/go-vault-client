@@ -1,5 +1,5 @@
 # Use the official Golang image as the build environment
-FROM golang:1.22.1 AS builder
+FROM go:1.22.1-bullseye AS builder
 # Set the working directory inside the container
 WORKDIR /app
 # Copy go.mod and go.sum files and download dependencies
