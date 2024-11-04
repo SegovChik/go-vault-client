@@ -2,7 +2,6 @@ package main
 
 import (
     "fmt"
-    "io/ioutil"
     "log"
     "os"
 
@@ -41,14 +40,13 @@ func getVaultTokenAppRole(client *vault.Client, roleID, secretID string) (string
 
 // getVaultTokenK8s authenticates using Kubernetes auth
 func getVaultTokenK8s(client *vault.Client) (string, error) {
-    // Get role name from environment variable
     roleName := os.Getenv("VAULT_K8S_ROLE")
     if roleName == "" {
         return "", fmt.Errorf("VAULT_K8S_ROLE environment variable not set")
     }
 
-    // Read the service account token
-    jwt, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/token")
+    // Using os.ReadFile instead of ioutil.ReadFile
+    jwt, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/token")
     if err != nil {
         return "", fmt.Errorf("failed to read service account token: %w", err)
     }
