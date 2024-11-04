@@ -1,5 +1,5 @@
 # Use the official Golang image as the build environment
-FROM go:1.22.1-bullseye AS builder
+FROM go:1.22.8-bullseye AS builder
 # Set the working directory inside the container
 WORKDIR /app
 # Copy go.mod and go.sum files and download dependencies
@@ -10,7 +10,7 @@ COPY . .
 # Build the Go application with static linking
 RUN CGO_ENABLED=0 go build -a -ldflags '-extldflags "-static"' -o vault-signer .
 
-FROM go:1.22.1-bullseye
+FROM go:1.22.8-bullseye
 # Set the working directory in the final container
 WORKDIR /app
 # Copy the binary from the builder stage
